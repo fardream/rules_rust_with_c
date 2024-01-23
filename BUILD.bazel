@@ -1,0 +1,30 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "rust_calling_c",
+    srcs = ["lib.rs"],
+)
+
+cc_library(
+    name = "simple_sin",
+    srcs = ["simple_sin.cc"],
+    hdrs = ["simple_sin.h"],
+)
+
+cc_test(
+    name = "simple_sin_test",
+    srcs = ["simple_sin_test.cc"],
+    deps = [":simple_sin"],
+)
+
+rust_library(
+    name = "rs_simple_sin",
+    srcs = ["simple_sin.rs"],
+    crate_root = "simple_sin.rs",
+    deps = ["simple_sin"],
+)
+
+rust_test(
+    name = "rs_simple_sin_test",
+    crate = ":rs_simple_sin",
+)
