@@ -18,7 +18,10 @@ rust_library(
     name = "rs_simple_sin",
     srcs = ["src/lib.rs"],
     crate_name = "rules_rust_with_c",
-    deps = ["simple_sin"],
+    deps = [
+        "simple_sin",
+        "@crates//:tokio",
+    ],
 )
 
 rust_test(
