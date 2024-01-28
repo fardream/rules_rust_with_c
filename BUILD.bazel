@@ -1,5 +1,5 @@
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 load("@rules_rust//cargo:defs.bzl", "cargo_build_script")
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library", "rust_test")
 
 cc_library(
     name = "simple_sin",
@@ -17,6 +17,7 @@ cc_test(
 rust_library(
     name = "rs_simple_sin",
     srcs = ["src/lib.rs"],
+    crate_name = "rules_rust_with_c",
     deps = ["simple_sin"],
 )
 
@@ -44,4 +45,13 @@ rust_library(
 rust_test(
     name = "rs_simple_sin_with_build_test",
     crate = ":rs_simple_sin_with_build",
+)
+
+rust_binary(
+    name = "rules_rust_with_c",
+    srcs = ["src/main.rs"],
+    deps = [
+        "rs_simple_sin",
+        "@crates//:tokio",
+    ],
 )
