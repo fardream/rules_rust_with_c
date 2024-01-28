@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 3,
-  "moduleFileHash": "f3fdf05fd038cc3e182e39065b33263835d05c6cd5b7a77d4be7a86f6d2b0afe",
+  "moduleFileHash": "b3aa1d62c87a05da5a4345be107703c72ce7eb3d2ab1feef1b6b8e9d2589e357",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -22,7 +22,9 @@
       "key": "<root>",
       "repoName": "",
       "executionPlatformsToRegister": [],
-      "toolchainsToRegister": [],
+      "toolchainsToRegister": [
+        "@rust_toolchains//:all"
+      ],
       "extensionUsages": [
         {
           "extensionBzlFile": "@rules_rust//rust:extensions.bzl",
@@ -33,7 +35,9 @@
             "line": 8,
             "column": 21
           },
-          "imports": {},
+          "imports": {
+            "rust_toolchains": "rust_toolchains"
+          },
           "devImports": [],
           "tags": [
             {
@@ -61,7 +65,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 14,
+            "line": 20,
             "column": 22
           },
           "imports": {
@@ -81,7 +85,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 18,
+                "line": 24,
                 "column": 17
               }
             }

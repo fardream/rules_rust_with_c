@@ -10,6 +10,12 @@ rust.toolchain(
     edition = "2021",
     versions = ["1.75.0"],
 )
+use_repo(
+    rust,
+    "rust_toolchains",
+)
+
+register_toolchains("@rust_toolchains//:all")
 
 crate = use_extension(
     "@rules_rust//crate_universe:extension.bzl",
