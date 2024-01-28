@@ -1,30 +1,47 @@
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
-
-rust_library(
-    name = "rust_calling_c",
-    srcs = ["lib.rs"],
-)
+load("@rules_rust//cargo:defs.bzl", "cargo_build_script")
 
 cc_library(
     name = "simple_sin",
-    srcs = ["simple_sin.cc"],
-    hdrs = ["simple_sin.h"],
+    srcs = ["src/simple_sin.cc"],
+    hdrs = ["src/simple_sin.h"],
+    strip_include_prefix = "src",
 )
 
 cc_test(
     name = "simple_sin_test",
-    srcs = ["simple_sin_test.cc"],
+    srcs = ["src/simple_sin_test.cc"],
     deps = [":simple_sin"],
 )
 
 rust_library(
     name = "rs_simple_sin",
-    srcs = ["simple_sin.rs"],
-    crate_root = "simple_sin.rs",
+    srcs = ["src/lib.rs"],
     deps = ["simple_sin"],
 )
 
 rust_test(
     name = "rs_simple_sin_test",
     crate = ":rs_simple_sin",
+)
+
+cargo_build_script(
+    name = "build_script",
+    srcs = ["build.rs"],
+    data = [
+        "src/simple_sin.cc",
+        "src/simple_sin.h",
+    ],
+    deps = ["@crates//:cc"],
+)
+
+rust_library(
+    name = "rs_simple_sin_with_build",
+    srcs = ["src/lib.rs"],
+    deps = [":build_script"],
+)
+
+rust_test(
+    name = "rs_simple_sin_with_build_test",
+    crate = ":rs_simple_sin_with_build",
 )
